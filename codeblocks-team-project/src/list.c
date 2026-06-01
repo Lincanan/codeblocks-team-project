@@ -21,27 +21,27 @@ int ListInsert(SqList *L, int pos, Volunteer v) {
         return 0;
     }
     // 判断位置是否合法
-    if (pos < 0 || pos > L->length || L->length >= MAX_SIZE){
+    if (pos < 0 || pos > L->length) {
         printf("插入位置不合法！\n");
         return 0;
     }
+
     // 尾插：不需要移动元素
-     if (pos == L->length) {
-         L->data[L->length] = v;
-         L->length++;
-         printf("插入成功！\n");
-         return 1;
-     }
-     // 非尾插：从后往前移动元素，腾出位置
-     for (int i = L->length; i > pos; i--) {
-         L->data[i] = L->data[i - 1];
-     }
-     // 插入新元素
-     L->data[pos] = v;
-     L->length++;
-     printf("插入成功！\n");
-     return 1;
- }
+    if (pos == L->length) {
+        L->data[L->length] = v;
+        L->length++;
+    } else {
+        // 从后往前移动元素，腾出位置
+        for (int i = L->length-1; i >= pos; i--) {
+            L->data[i+1] = L->data[i];
+        }
+        // 插入新元素
+        L->data[pos] = v;
+        L->length++;
+    }
+    return 1;
+}
+
 
 // 删除元素（按学号）
 int ListDelete(SqList *L, char *stuId) {
@@ -79,7 +79,7 @@ void ListUpdate(SqList *L, char *stuId) {
     printf("1. 姓名  2. 项目  3. 时长  4. 星级  5. 全部修改\n");
     int choice;
     scanf("%d", &choice);
-    while(getchar() != '\n');
+    clearBuf();
 
     switch (choice) {
         case 1:
@@ -129,9 +129,17 @@ void ListShow(SqList *L) {
     }
     printf("\n===== 志愿者列表 =====\n");
     for (int i = 0; i < L->length; i++) {
-        printf("位置%d | 学号:%s | 姓名:%s | 项目:%s | 时长:%d | 星级:%d\n",
+        // 定义 statusStr 变量
+        const char *statusStr;
+        switch(L->data[i].status) {
+            case 0: statusStr = "待审核"; break;
+            case 1: statusStr = "已审核"; break;
+            case 2: statusStr = "已拒绝"; break;
+            default: statusStr = "未知状态";
+        }
+        printf("位置%d | 学号:%s | 姓名:%s | 项目:%s | 时长:%d | 星级:%d星 | 状态:%s\n",
                i + 1, L->data[i].stuId, L->data[i].name, L->data[i].project,
-               L->data[i].hour, L->data[i].star);
+               L->data[i].hour, L->data[i].star, statusStr);
     }
 }
 

@@ -1,23 +1,32 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#include "public.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
-// 循环双端队列结构体
-typedef struct{
-    Volunteer data[MAX_SIZE];
-    int front; // 队头
-    int rear; // 队尾
+#include"public.h"
+
+// 双端队列节点
+typedef struct QNode {
+    Volunteer data;
+    struct QNode *prev;
+    struct QNode *next;
+} QNode;
+
+// 双端队列结构体
+typedef struct DeQueue {
+    QNode *front;
+    QNode *rear;
 } DeQueue;
 
-// 函数声明
-void InitQueue(DeQueue *q);
-int IsFull(DeQueue *q);
-int IsEmpty(DeQueue *q);
-int EnQueueHead(DeQueue *q, Volunteer v);
-int EnQueueTail(DeQueue *q, Volunteer v);
-int DeQueueHead(DeQueue *q, Volunteer *v);
-void ShowQueue(DeQueue *q);
-void DestroyQueue(DeQueue *q);
+// 函数声明（必须和queue.c里的定义完全一致！）
+void initQueue(DeQueue *q);
+int isQueueEmpty(DeQueue *q);
+int enQueueHead(DeQueue *q, Volunteer v);
+int enQueueTail(DeQueue *q, Volunteer v);
+int deQueueHead(DeQueue *q, Volunteer *v);
+void showQueue(DeQueue *q);
+void destroyQueue(DeQueue *q);
 
 #endif

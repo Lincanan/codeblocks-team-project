@@ -12,5 +12,6 @@ typedef struct {
     char project[MAX_NAME];   //服务项目
     int hour;   //服务时长
     int star;   //星级（1~5）
+    int status;    // 状态字段：0=待审核 1=已审核 2=已拒绝
 } Volunteer;
 #endif

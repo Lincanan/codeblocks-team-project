@@ -83,39 +83,59 @@ int UndoOperation(Stack *s, SqList *L) {
 void stackMenu(Stack *s, SqList *L) {
     int choice;
     while (1) {
-        printf("\n----------------------------------------\n");
-        printf("==== 3. 操作回退菜单 ====\n");
-        printf("1. 撤销上一次操作\n");
-        printf("2. 查看可撤销操作记录数\n");
+        printf("\n===== 操作回退菜单 =====\n");
+        printf("1. 报名撤销\n");
+        printf("2. 签到记录回滚\n");
+        printf("3. 服务时长回退\n");
+        printf("4. 星级重置\n");
+        printf("5. 查看可撤销操作记录数\n");
         printf("0. 返回主菜单\n");
         printf("请输入选择：");
-        if(scanf("%d", &choice)!=1){
-            printf("输入无效，请输入数字! \n");
-            while(getchar() != '\n');
+
+        if (scanf("%d", &choice) != 1) {
+            printf("输入无效，请输入数字！\n");
+            while (getchar() != '\n');
             continue;
-        };
+        }
 
         switch (choice) {
             case 1:
+                // 报名撤销
                 if (UndoOperation(s, L)) {
-                    printf("操作回退完成！\n");
+                    printf("报名撤销执行完成！\n");
                 }
                 break;
             case 2:
-                printf("当前可撤销操作数：%d\n", s->top + 1);
+                // 签到记录回滚
+                if (UndoOperation(s, L)) {
+                    printf("签到记录回滚执行完成！\n");
+                }
+                break;
+            case 3:
+                // 服务时长回退
+                if (UndoOperation(s, L)) {
+                    printf("服务时长回退执行完成！\n");
+                }
+                break;
+            case 4:
+                // 星级重置
+                if (UndoOperation(s, L)) {
+                    printf("星级重置执行完成！\n");
+                }
+                break;
+            case 5:
+                ShowStack(s);
                 break;
             case 0:
-                if(choice==0){
-                    printf("退出操作回退菜单\n");
-                    break;
-                }
+                printf("退出操作回退菜单\n");
+                return;
             default:
                 printf("选项无效，请重新选择！\n");
                 break;
         }
-        system("pause");
     }
 }
+
 void DestroyStack(Stack *s){
     s->top = -1;
 }
