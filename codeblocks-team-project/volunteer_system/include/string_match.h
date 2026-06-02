@@ -1,0 +1,13 @@
+#ifndef STRING_MATCH_H
+#define STRING_MATCH_H
+
+// BF暴力匹配
+int BF(char *text, char *pattern);
+// 构建KMP前缀Next数组
+void BuildNext(char *pattern, int next[]);
+// KMP匹配算法
+int KMP(char *text, char *pattern);
+// 业务检索接口
+void VolunteerSearchBF_KMP(char key[]);
+
+#endif
